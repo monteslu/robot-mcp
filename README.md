@@ -29,7 +29,7 @@ The service exposes an MCP tool called `moveMyServo` that accepts a `degrees` pa
 
 ## Dependencies
 
-- @modelcontextprotocol/sdk - Model Context Protocol implementation
-- johnny-five - JavaScript robotics framework
-- webaudio-node - Web Audio API for Node.js
-- zod - Schema validation library
+- [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk) - Model Context Protocol implementation
+- [johnny-five](https://johnny-five.io/) - JavaScript robotics framework
+- [webaudio-node](https://github.com/monteslu/webaudio-node) - Web Audio API for Node.js
+- [zod](https://github.com/colinhacks/zod) - Schema validation library
