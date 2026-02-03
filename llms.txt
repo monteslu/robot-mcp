@@ -1,0 +1,109 @@
+# robot-mcp
+
+> MCP server for controlling physical robots using Johnny-Five. Move servos, play sounds, and interact with real hardware from AI conversations.
+
+## Overview
+
+This is a Model Context Protocol (MCP) server that lets AI assistants control physical hardware. Currently supports servo motor control with audio feedback.
+
+## Requirements
+
+- Node.js 18+
+- Arduino or compatible board (Uno, Mega, etc.)
+- USB connection to the board
+- Servo motor connected to pin 10
+- Speaker/audio output (optional, for sound effects)
+
+## Installation
+
+```bash
+git clone https://github.com/monteslu/robot-mcp
+cd robot-mcp
+npm install
+```
+
+## Running
+
+```bash
+node index.js
+```
+
+The server uses stdio transport for MCP communication.
+
+## Available Tools
+
+### moveMyServo
+
+Moves the servo motor to a specified position.
+
+**Parameters:**
+- `degrees` (number, required): Position in degrees from 0 to 180
+
+**Example:**
+```json
+{
+  "name": "moveMyServo",
+  "arguments": {
+    "degrees": 90
+  }
+}
+```
+
+**Behavior:**
+- Moves servo to specified angle
+- Plays "Hasta la vista, baby!" audio clip
+- Returns confirmation message
+
+## MCP Configuration
+
+Add to your MCP client config (e.g., Claude Desktop):
+
+```json
+{
+  "mcpServers": {
+    "robot": {
+      "command": "node",
+      "args": ["/path/to/robot-mcp/index.js"]
+    }
+  }
+}
+```
+
+## Hardware Setup
+
+1. Connect Arduino to computer via USB
+2. Wire servo:
+   - Signal wire → Pin 10
+   - Power wire → 5V
+   - Ground wire → GND
+3. Connect speaker to audio output (optional)
+
+## Extending
+
+To add more robot capabilities, modify `index.js`:
+
+```javascript
+// Add a new tool
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+  if (request.params.name === 'myNewTool') {
+    // Your hardware control code here
+    return { content: [{ type: 'text', text: 'Done!' }] };
+  }
+});
+```
+
+## Frameworks Used
+
+- **Johnny-Five**: JavaScript robotics framework, supports Arduino, Raspberry Pi, and many other boards
+- **MCP SDK**: Model Context Protocol for AI tool integration
+- **webaudio-node**: Web Audio API implementation for Node.js
+
+## Related Projects
+
+- [johnny-five](https://johnny-five.io/) - The robotics framework this is built on
+- [vibe-eyes](https://github.com/monteslu/vibe-eyes) - MCP server for AI vision
+- [jsgamelauncher](https://github.com/monteslu/jsgamelauncher) - JavaScript game engine
+
+## License
+
+ISC
